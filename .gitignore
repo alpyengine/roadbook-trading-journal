@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Build
+dist/
+build/
+
+# ─── DATOS LOCALES (NO subir a GitHub) ───────────────────────────────────────
+# Esta carpeta contiene los backups/exportaciones de tus operaciones.
+# Permanece solo en tu HDD local.
+data/
+
+# Variables de entorno
+.env
+.env.local
+.env.production
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
