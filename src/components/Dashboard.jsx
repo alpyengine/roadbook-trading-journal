@@ -2,7 +2,7 @@
 // Versión: 1.0.0
 
 import React from "react";
-import { EquityCurve, DirBadge } from "./UI";
+import { EquityCurve, DirBadge, PnLChart } from "./UI";
 import { calcStats } from "../utils/stats";
 
 export function Dashboard({ trades, onNew, onHistory }) {
@@ -124,6 +124,19 @@ export function Dashboard({ trades, onNew, onHistory }) {
               </table>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* P&L Acumulado */}
+      <div className="card" style={{ marginTop: 16 }}>
+        <div className="card-header">
+          <span className="card-title">💰 P&amp;L Acumulado</span>
+          <span style={{ fontSize: 13, fontWeight: 700, color: stats.totalPips >= 0 ? "#16a34a" : "#dc2626" }}>
+            {stats.totalPips >= 0 ? "+" : ""}{stats.totalPips.toFixed(1)} pips total
+          </span>
+        </div>
+        <div className="card-body">
+          <PnLChart trades={trades} />
         </div>
       </div>
 

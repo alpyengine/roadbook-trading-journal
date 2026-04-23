@@ -1,7 +1,7 @@
 # 📒 Roadbook — Diario de Trading Personal
 
 **Autor:** Alex Picanyol
-**Versión:** 2.0.1
+**Versión:** 2.0.2
 **Estado:** En desarrollo activo
 **Repositorio:** https://github.com/alpyengine/roadbook-trading-journal
 
@@ -111,6 +111,18 @@ Al pulsar VER se despliega bajo la fila un panel completo con:
 ### ✅ v2.0.1 — Actualización de documentación (23 Abril 2026)
 
 - README actualizado con todas las versiones, características y roadmap al día.
+
+---
+
+### ✅ v2.0.2 — Gráfico P&L acumulado en Dashboard (23 Abril 2026)
+
+**Panel Principal (Dashboard) — nueva sección**
+- Gráfico de área interactivo **P&L Acumulado** con la librería Recharts.
+- Eje X: fecha de cierre de cada operación (`fechaSalida`), ordenado cronológicamente.
+- Eje Y: pips acumulados con prefijo `+`/`-` y línea de referencia en cero.
+- Color dinámico: verde cuando el resultado global es positivo, rojo cuando es negativo.
+- Tooltip interactivo: muestra la fecha de cierre y el P&L acumulado en el punto exacto.
+- Estado vacío: mensaje informativo si hay menos de 2 operaciones cerradas.
 
 ---
 
@@ -314,6 +326,7 @@ convención de versiones MAJOR.MINOR.PATCH y flujo de trabajo diario.
 | v1.0.1 | ✅ Completa | Documentación técnica DevLog (ES + EN) |
 | v2.0.0 | ✅ Completa | Panel expandible inline, sesión con bandera, Mayor Estrategia Ganadora |
 | v2.0.1 | ✅ Completa | README actualizado con todas las versiones |
+| v2.0.2 | ✅ Completa | Gráfico P&L acumulado interactivo en Dashboard (Recharts) |
 | v3.0.0 | 🔜 Planificada | Importación JSON, R:R automático, filtro fechas, Supabase |
 
 ---

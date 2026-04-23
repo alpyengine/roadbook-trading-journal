@@ -1,7 +1,11 @@
 // ─── ROADBOOK — Componentes UI compartidos ────────────────────────────────────
-// Versión: 1.0.0
+// Versión: 2.0.2
 
 import React from "react";
+import {
+  AreaChart, Area, XAxis, YAxis, CartesianGrid,
+  Tooltip, ReferenceLine, ResponsiveContainer,
+} from "recharts";
 
 // ─── SelectField ──────────────────────────────────────────────────────────────
 export function SelectField({ value, onChange, options, placeholder }) {
@@ -95,5 +99,74 @@ export function EquityCurve({ trades }) {
       <polygon points={fillPts} fill="url(#eqGrad)" />
       <polyline points={pts} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
     </svg>
+  );
+}
+
+// ─── P&L Chart (Recharts) ────────────────────────────────────────────────────
+export function PnLChart({ trades }) {
+  const closed = trades
+    .filter(t => t.estado === "CERRADA" && t.resultado && t.fechaSalida)
+    .sort((a, b) => a.fechaSalida.localeCompare(b.fechaSalida));
+
+  if (closed.length < 2) {
+    return (
+      <div style={{ height: 180, display: "flex", alignItems: "center", justifyContent: "center", color: "#9ca3af", fontSize: 13 }}>
+        Registra al menos 2 operaciones cerradas para ver el gráfico P&amp;L
+      </div>
+    );
+  }
+
+  let acum = 0;
+  const data = closed.map((t, i) => {
+    acum += parseFloat(t.resultado) || 0;
+    return { fecha: t.fechaSalida, pips: parseFloat(acum.toFixed(1)), op: i + 1 };
+  });
+
+  const last  = data[data.length - 1].pips;
+  const color = last >= 0 ? "#16a34a" : "#dc2626";
+
+  const fmtPips = v => (v >= 0 ? "+" : "") + v;
+
+  return (
+    <ResponsiveContainer width="100%" height={180}>
+      <AreaChart data={data} margin={{ top: 10, right: 16, left: 0, bottom: 0 }}>
+        <defs>
+          <linearGradient id="pnlGrad" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%"  stopColor={color} stopOpacity={0.15} />
+            <stop offset="95%" stopColor={color} stopOpacity={0.01} />
+          </linearGradient>
+        </defs>
+        <CartesianGrid strokeDasharray="4 3" stroke="#f3f4f6" vertical={false} />
+        <XAxis
+          dataKey="fecha"
+          tick={{ fontSize: 10, fill: "#9ca3af" }}
+          tickLine={false}
+          axisLine={false}
+          interval="preserveStartEnd"
+        />
+        <YAxis
+          tick={{ fontSize: 10, fill: "#9ca3af" }}
+          tickLine={false}
+          axisLine={false}
+          tickFormatter={fmtPips}
+          width={50}
+        />
+        <ReferenceLine y={0} stroke="#e5e7eb" strokeDasharray="4 3" />
+        <Tooltip
+          contentStyle={{ fontSize: 12, borderRadius: 6, border: "1px solid #e5e7eb", boxShadow: "0 2px 8px rgba(0,0,0,0.08)" }}
+          formatter={v => [fmtPips(v) + " pips", "P&L acumulado"]}
+          labelFormatter={label => "Fecha cierre: " + label}
+        />
+        <Area
+          type="monotone"
+          dataKey="pips"
+          stroke={color}
+          strokeWidth={2}
+          fill="url(#pnlGrad)"
+          dot={false}
+          activeDot={{ r: 4, fill: color }}
+        />
+      </AreaChart>
+    </ResponsiveContainer>
   );
 }
