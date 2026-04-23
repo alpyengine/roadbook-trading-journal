@@ -1,0 +1,13 @@
+{
+  "name": "Roadbook Trading Journal",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "postCreateCommand": "npm install && npm install -g @anthropic-ai/claude-code && npx @smithery/cli@latest skill add github/git-commit --agent claude-code",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  }
+}
